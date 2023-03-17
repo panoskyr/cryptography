@@ -1,8 +1,7 @@
 
 #open the non encrypted file
-with open('clean_plaintext.txt', 'r') as f:
+with open('ciphertext.txt', 'r') as f:
     mytext=f.read()
-    print(mytext)
 
 # zero based 
 alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -31,8 +30,21 @@ def encrypt_to_txt(plaintext,key):
     with open('ciphertext.txt', 'w') as myfile:
         myfile.write(encrypt(plaintext=plaintext,key=key))
 
-encrypt_to_txt(mytext,'LEMON')
 
 
+def decrypt(ciphertext,key):
+    plaintext=''
+    for i in range(len(ciphertext)):
+        c=alphabet.index(ciphertext[i])
+        k=alphabet.index(key[i%len(key)])
+        plainnumber=(c-k)%26
+        plaincharacter=alphabet[plainnumber]
+        plaintext+=plaincharacter
+    return plaintext
 
+def decrypt_to_txt(ciphertext,key):
+    with open('decrypted.txt', 'w') as myfile:
+        myfile.write(decrypt(ciphertext=ciphertext,key=key))
+
+decrypt_to_txt(mytext, 'LEMON')
 
