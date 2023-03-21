@@ -79,7 +79,7 @@ def getLetterCount(msg):
 def getFrequencyOrder(letterCount):
     sortedFreq=sorted(letterCount.items(), key=lambda x:x[1], reverse=True)
     sortedDictFreq=dict(sortedFreq)
-    print(sortedDictFreq)
+    return sortedDictFreq
 
 def indexOfCoincidence(msg):
     counts=[0]*26
@@ -106,10 +106,10 @@ while not found:
         #keep only the period-th occurence od the ciphertext
         slices[i%period]+=ciphertext[i]
     print(slices)
-    sum=0
+    suma=0
     for i in range(period):
-        sum+=indexOfCoincidence(slices[i])
-        coincidence=sum/period
+        suma+=indexOfCoincidence(slices[i])
+        coincidence=suma/period
         if coincidence>1.6:
             found=True
 print("The key has : {0} characters".format(period))
@@ -130,14 +130,36 @@ def findCosine(x,y):
         y_squared+=y[i]*y[i]
     return num/ sqrt(x_squared*y_squared)
 
+def alphabeticOrder(diction):
+    return dict(sorted(diction.items()))
 
+## a dictionary in alphabetic order with the frequencies of the english language
+sortedLangFreqDict=alphabeticOrder(englishLetterFreqDict)
+listSortedLangFreqDict=list(sortedLangFreqDict.values())
 
-
-slicedText=slices
-for potentialKey in alphabet:
+## gets the frequencies for the entries in a text
+# print(list(sortedLangFreqDict.values()))
+cosinePerLetter={}
+for z in range(len(slices)):
+    cosinePerLetter[z]={}
     
-    decryptedSlice=decrypt(slices[1], potentialKey) 
-    print("for character {0} the frequency is: ". format(potentialKey))
-    getFrequencyOrder(getLetterCount(decryptedSlice))
-    print("\n")
+    for potentialKey in alphabet:
+        
+        decryptedSlice=decrypt(slices[z], potentialKey) 
+        print("for character {0} the frequency is: ". format(potentialKey))
+        letterCount=getLetterCount(decryptedSlice)
+        listLetterCount=list(letterCount.values())
+        freqListLetterCount=[round(100*x/sum(listLetterCount),2) for x in listLetterCount]
+        print(getFrequencyOrder(letterCount))
+        #print(freqListLetterCount)
+        cos=findCosine(listSortedLangFreqDict,freqListLetterCount)
+        print("the cosine is: {}".format(cos))
+        cosinePerLetter[z][potentialKey]=cos
+        print("\n")
+    
+    
+for _ in range(len(cosinePerLetter)):
+
+    print(dict(sorted(cosinePerLetter[_].items(), key=lambda x: x[1],reverse=True)))
+
 
