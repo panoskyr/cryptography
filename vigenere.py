@@ -59,7 +59,7 @@ def decrypt(ciphertext,key):
     return plaintext
 
 def decrypt_to_txt(ciphertext,key):
-    with open('decrypted.txt', 'w') as myfile:
+    with open('possible_decrypted.txt', 'w') as myfile:
         myfile.write(decrypt(ciphertext=ciphertext,key=key))
 
 
@@ -161,5 +161,6 @@ for z in range(len(slices)):
 for _ in range(len(cosinePerLetter)):
 
     print(dict(sorted(cosinePerLetter[_].items(), key=lambda x: x[1],reverse=True)))
+    print("\n")
 
-
+decrypt_to_txt(ciphertext,'AVOCADO')
