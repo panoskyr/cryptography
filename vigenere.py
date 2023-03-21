@@ -1,14 +1,14 @@
 import matplotlib.pyplot as plt
 
-def openCiphertext():
-    with open('ciphertext2.txt', 'r') as f:
+def openCiphertext(text):
+    with open(text, 'r') as f:
         mytext=f.read()
     return mytext
 
 
 ## opens the clean plaintext (all caps only a-z)
-def openPlaintext():
-    with open('clean_small_plaintext.txt', 'r') as f:
+def openPlaintext(text):
+    with open(text, 'r') as f:
         mytext=f.read()
         return mytext
 
@@ -41,11 +41,11 @@ def encrypt_to_txt(plaintext,key):
         myfile.write(encrypt(plaintext=plaintext,key=key))
 
 
-
-key1='JQOTNXIZ'
-plaintext=openPlaintext()
-print( plaintext)
-encrypt_to_txt(plaintext=plaintext,key=key1)
+## used to create our cipher
+# key1='JQOTNXIZ'
+# plaintext=openPlaintext()
+# print( plaintext)
+# encrypt_to_txt(plaintext=plaintext,key=key1)
 
 
 def decrypt(ciphertext,key):
@@ -95,7 +95,7 @@ def indexOfCoincidence(msg):
 
 
 
-ciphertext=mytext
+ciphertext=openCiphertext('cipher.txt')
 found=False
 period=0
 while not found:
@@ -118,6 +118,20 @@ print("The key has : {0} characters".format(period))
 ## all characters in a slice were encoded using the same letter#
 ## a slice is just a rotation cipher
 ## check frequency of letters because we cannot look at words
+
+from math import sqrt
+def findCosine(x,y):
+    num=0
+    x_squared=0
+    y_squared=0
+    for i in range(len(x)):
+        num+=x[i]*y[i]
+        x_squared+=x[i]*x[i]
+        y_squared+=y[i]*y[i]
+    return num/ sqrt(x_squared*y_squared)
+
+
+
 
 slicedText=slices
 for potentialKey in alphabet:
