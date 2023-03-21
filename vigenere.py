@@ -1,7 +1,17 @@
 import matplotlib.pyplot as plt
-#open the non encrypted file
-with open('ciphertext.txt', 'r') as f:
-    mytext=f.read()
+
+def openCiphertext():
+    with open('ciphertext2.txt', 'r') as f:
+        mytext=f.read()
+    return mytext
+
+
+## opens the clean plaintext (all caps only a-z)
+def openPlaintext():
+    with open('clean_small_plaintext.txt', 'r') as f:
+        mytext=f.read()
+        return mytext
+
 
 # zero based 
 alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -27,12 +37,15 @@ def encrypt(plaintext,key):
     return ciphertext
 
 def encrypt_to_txt(plaintext,key):
-    with open('ciphertext.txt', 'w') as myfile:
+    with open('ciphertext3.txt', 'w') as myfile:
         myfile.write(encrypt(plaintext=plaintext,key=key))
 
 
 
-
+key1='JQOTNXIZ'
+plaintext=openPlaintext()
+print( plaintext)
+encrypt_to_txt(plaintext=plaintext,key=key1)
 
 
 def decrypt(ciphertext,key):

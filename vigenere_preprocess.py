@@ -10,7 +10,7 @@ def makeupper(s):
 
 
 
-with open('plaintext.txt', 'r') as file:
+with open('smallplaintext.txt', 'r') as file:
     data=file.read().replace('\n','')
     print (type(data))
     #print (data)
@@ -19,5 +19,5 @@ with open('plaintext.txt', 'r') as file:
 
 
 #write the clean all uppercase file
-with open('clean_plaintext.txt', 'w') as file:
+with open('clean_small_plaintext.txt', 'w') as file:
     file.write(data_upper)
